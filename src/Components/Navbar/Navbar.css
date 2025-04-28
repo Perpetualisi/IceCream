@@ -146,6 +146,9 @@
     .search-bar input {
         width: 150px;
     }
+    .search-bar {
+        margin-right: auto;
+    }
 
     
     .language-selector select {
@@ -166,6 +169,9 @@
 
     .search-bar input {
         width: 250px;
+    }
+    .search-bar {
+        margin-right: auto;
     }
 
     .language-selector select {
