@@ -7,15 +7,27 @@ const translations = {
   es: { home: "Inicio", flavours: "Sabores", testimonials: "Testimonios", about: "Acerca de", specialOffers: "Ofertas Especiales", gallery: "Galería", locations: "Ubicaciones", contact: "Contacto" }
 };
 
+// Sample data to search
+const flavourList = [
+  "Vanilla Dream", "Chocolate Heaven", "Strawberry Bliss",
+  "Minty Fresh", "Caramel Crunch", "Berry Explosion",
+  "Coconut Paradise", "Mango Tango", "Peach Perfect"
+];
+
 const Navbar = ({ language, handleLanguageChange, isDarkMode, handleDarkModeToggle, isMenuOpen, handleMenuToggle, handleCloseMenu, searchQuery, handleSearchChange }) => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false); 
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const handleSearchFocus = () => setIsSearchFocused(true);
   const handleSearchBlur = () => setIsSearchFocused(false);
 
-  const openSearch = () => setIsSearchOpen(true);   
-  const closeSearch = () => setIsSearchOpen(false); 
+  const openSearch = () => setIsSearchOpen(true);
+  const closeSearch = () => setIsSearchOpen(false);
+
+  // Filter the flavourList based on the searchQuery
+  const filteredFlavours = flavourList.filter(flavour =>
+    flavour.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <nav className={`navbar ${isDarkMode ? 'dark' : 'light'}`}>
@@ -67,17 +79,34 @@ const Navbar = ({ language, handleLanguageChange, isDarkMode, handleDarkModeTogg
 
       </div>
 
-      
+      {/* Search Section */}
       {isSearchOpen && (
         <div className="search-overlay">
-          <input 
+          <input
             type="text"
             placeholder="Search Frostify..."
             value={searchQuery}
             onChange={handleSearchChange}
+            onFocus={handleSearchFocus}
+            onBlur={handleSearchBlur}
             autoFocus
           />
           <button className="cancel-search" onClick={closeSearch}>Cancel</button>
+
+          {/* Display search results */}
+          {searchQuery && (
+            <div className="search-results">
+              {filteredFlavours.length > 0 ? (
+                filteredFlavours.map((flavour, index) => (
+                  <div key={index} className="search-result-item">
+                    {flavour}
+                  </div>
+                ))
+              ) : (
+                <div className="no-results">No results found.</div>
+              )}
+            </div>
+          )}
         </div>
       )}
     </nav>
