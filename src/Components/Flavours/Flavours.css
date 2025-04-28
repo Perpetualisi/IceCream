@@ -1,0 +1,99 @@
+/* Flavours Section Styles */
+.flavours {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #f4f4f4;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .flavours-heading {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #333;
+    font-weight: 700;
+  }
+  
+  .flavours-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .flavour-card {
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+  
+  .flavour-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .flavour-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .flavour-info {
+    padding: 20px;
+  }
+  
+  .flavour-name {
+    font-size: 1.75rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .flavour-description {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+  }
+  
+  /* Mobile Responsiveness */
+  @media screen and (max-width: 768px) {
+    .flavours-heading {
+      font-size: 2rem;
+    }
+  
+    .flavour-name {
+      font-size: 1.5rem;
+    }
+  
+    .flavour-description {
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Dark Mode Styles */
+  .flavours.dark {
+    background-color: #333;
+    color: #f1f1f1;
+  }
+  
+  .flavours.dark .flavours-heading {
+    color: #FFD700; /* Yellow color for heading in dark mode */
+  }
+  
+  .flavours.dark .flavour-name,
+  .flavours.dark .flavour-description {
+    color: #FFD700; /* Yellow text in dark mode */
+  }
+  
+  .flavours.dark .flavour-card {
+    background-color: #444;
+  }
+  
+  .flavours.dark .flavour-card .flavour-info {
+    color: #FFD700; /* Yellow text for the flavour-info section inside the card */
+  }
+  
+  /* Dark Mode: Ensure text inside cards is yellow */
+  .flavours.dark .flavour-card .flavour-name,
+  .flavours.dark .flavour-card .flavour-description {
+    color: #FFD700 !important; /* Force yellow color for all text */
+  }
+  

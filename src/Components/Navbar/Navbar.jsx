@@ -1,0 +1,68 @@
+import React from "react";
+import './Navbar.css';
+
+const translations = {
+  en: { home: "Home", flavours: "Flavours", testimonials: "Testimonials", about: "About", specialOffers: "Special Offers", gallery: "Gallery", locations: "Locations", contact: "Contact" },
+  fr: { home: "Accueil", flavours: "Saveurs", testimonials: "Témoignages", about: "À propos", specialOffers: "Offres Spéciales", gallery: "Galerie", locations: "Emplacements", contact: "Contact" },
+  es: { home: "Inicio", flavours: "Sabores", testimonials: "Testimonios", about: "Acerca de", specialOffers: "Ofertas Especiales", gallery: "Galería", locations: "Ubicaciones", contact: "Contacto" }
+};
+
+const Navbar = ({ language, handleLanguageChange, isDarkMode, handleDarkModeToggle, isMenuOpen, handleMenuToggle, handleCloseMenu, searchQuery, handleSearchChange }) => {
+  return (
+    <nav className={`navbar ${isDarkMode ? 'dark' : 'light'}`}>
+      <div className="navbar-container">
+        
+        <div className="dark-mode-toggle" onClick={handleDarkModeToggle}>
+          {isDarkMode ? "🌙" : "🌞"}
+        </div>
+
+        <div className="search-bar">
+          <input 
+            type="text" 
+            placeholder="Search..." 
+            value={searchQuery} 
+            onChange={handleSearchChange}
+          />
+        </div>
+
+        <div className="language-selector">
+          <select value={language} onChange={handleLanguageChange}>
+            <option value="en">English</option>
+            <option value="fr">French</option>
+            <option value="es">Spanish</option>
+          </select>
+        </div>
+
+        <div className="social-icons">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">🌐</a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">🐦</a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">📸</a>
+        </div>
+
+        <div className="logo">
+          <h1>Frostify</h1>
+        </div>
+
+        <div className="menu-icon" onClick={handleMenuToggle}>
+          {isMenuOpen ? <span className="cancel-icon">&#10005;</span> : <span className="hamburger-icon">&#9776;</span>}
+        </div>
+
+        <div className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
+          <ul>
+            <li><a href="#home" onClick={handleCloseMenu}>{translations[language].home}</a></li>
+            <li><a href="#flavours" onClick={handleCloseMenu}>{translations[language].flavours}</a></li>
+            <li><a href="#testimonials" onClick={handleCloseMenu}>{translations[language].testimonials}</a></li>
+            <li><a href="#about" onClick={handleCloseMenu}>{translations[language].about}</a></li>
+            <li><a href="#special-offers" onClick={handleCloseMenu}>{translations[language].specialOffers}</a></li>
+            <li><a href="#gallery" onClick={handleCloseMenu}>{translations[language].gallery}</a></li>
+            <li><a href="#locations" onClick={handleCloseMenu}>{translations[language].locations}</a></li>
+            <li><a href="#contact" onClick={handleCloseMenu}>{translations[language].contact}</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;

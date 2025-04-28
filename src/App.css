@@ -1,0 +1,19 @@
+
+
+.light {
+  background-color: #ffffff;
+  color: #000000;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.dark {
+  background-color: #121212;
+  color: #ffffff;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+
+body, html {
+  margin: 0;
+  padding: 0;
+}

@@ -1,0 +1,75 @@
+/* Gallery.css */
+.gallery {
+    padding: 60px 20px;
+    background-color: #fff0f5; /* Light ice cream pink */
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .gallery-heading {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #ff7b00;
+  }
+  
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .gallery-item {
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: white;
+    transition: transform 0.3s ease;
+  }
+  
+  .gallery-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .gallery-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+  }
+  
+  /* Mobile adjustments */
+  @media (max-width: 600px) {
+    .gallery-heading {
+      font-size: 2rem;
+    }
+  
+    .gallery-image {
+      height: 200px;
+    }
+  }
+  
+  /* Dark Mode Styles */
+  .gallery.dark {
+    background-color: #222; /* Dark background for gallery */
+    color: #fff; /* White text for dark mode */
+  }
+  
+  .gallery.dark .gallery-heading {
+    color: #ff7b00; /* Ensure the heading color remains the same in dark mode */
+  }
+  
+  .gallery.dark .gallery-item {
+    background: #333; /* Dark background for gallery items */
+  }
+  
+  .gallery.dark .gallery-item:hover {
+    transform: scale(1.05); /* Hover effect remains the same */
+  }
+  
+  .gallery.dark .gallery-image {
+    border-radius: 10px; /* Ensure image has rounded corners in dark mode */
+  }
+  
