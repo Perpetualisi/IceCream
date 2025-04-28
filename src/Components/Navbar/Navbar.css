@@ -140,6 +140,7 @@
     .search-bar {
         margin-left: 0;  
         margin-right: auto; 
+        width:100px ;
     }
 
     
@@ -167,6 +168,7 @@
     .menu-icon {
         display: block; 
     }
+
 
     .search-bar input {
         width: 250px;
