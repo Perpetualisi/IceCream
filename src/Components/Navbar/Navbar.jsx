@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import './Navbar.css';
 
 const translations = {
@@ -8,21 +8,26 @@ const translations = {
 };
 
 const Navbar = ({ language, handleLanguageChange, isDarkMode, handleDarkModeToggle, isMenuOpen, handleMenuToggle, handleCloseMenu, searchQuery, handleSearchChange }) => {
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false); 
+
+  const handleSearchFocus = () => setIsSearchFocused(true);
+  const handleSearchBlur = () => setIsSearchFocused(false);
+
+  const openSearch = () => setIsSearchOpen(true);   
+  const closeSearch = () => setIsSearchOpen(false); 
+
   return (
     <nav className={`navbar ${isDarkMode ? 'dark' : 'light'}`}>
       <div className="navbar-container">
-        
+
+        {/* Dark Mode Toggle */}
         <div className="dark-mode-toggle" onClick={handleDarkModeToggle}>
           {isDarkMode ? "🌙" : "🌞"}
         </div>
 
-        <div className="search-bar">
-          <input 
-            type="text" 
-            placeholder="Search..." 
-            value={searchQuery} 
-            onChange={handleSearchChange}
-          />
+        <div className="search-icon" onClick={openSearch}>
+          🔍
         </div>
 
         <div className="language-selector">
@@ -61,6 +66,20 @@ const Navbar = ({ language, handleLanguageChange, isDarkMode, handleDarkModeTogg
         </div>
 
       </div>
+
+      
+      {isSearchOpen && (
+        <div className="search-overlay">
+          <input 
+            type="text"
+            placeholder="Search Frostify..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            autoFocus
+          />
+          <button className="cancel-search" onClick={closeSearch}>Cancel</button>
+        </div>
+      )}
     </nav>
   );
 };
