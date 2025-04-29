@@ -35,7 +35,7 @@
 
 .search-bar {
     position: relative;
-    width: 200px; /* Initial width */
+    width: 200px; 
     transition: width 0.3s ease;
 }
 
@@ -223,7 +223,7 @@
 }
 .search-overlay {
     position: absolute;
-    top: 60px; /* Adjust this to position below navbar */
+    top: 60px; 
     left: 0;
     right: 0;
     background-color: rgba(255, 255, 255, 0.9);

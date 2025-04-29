@@ -1,7 +1,6 @@
-/* Gallery.css */
 .gallery {
     padding: 60px 20px;
-    background-color: #fff0f5; /* Light ice cream pink */
+    background-color: #fff0f5; 
     text-align: center;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
@@ -40,7 +39,6 @@
     border-radius: 10px;
   }
   
-  /* Mobile adjustments */
   @media (max-width: 600px) {
     .gallery-heading {
       font-size: 2rem;
@@ -51,25 +49,24 @@
     }
   }
   
-  /* Dark Mode Styles */
   .gallery.dark {
-    background-color: #222; /* Dark background for gallery */
-    color: #fff; /* White text for dark mode */
+    background-color: #222; 
+    color: #fff; 
   }
   
   .gallery.dark .gallery-heading {
-    color: #ff7b00; /* Ensure the heading color remains the same in dark mode */
+    color: #ff7b00; 
   }
   
   .gallery.dark .gallery-item {
-    background: #333; /* Dark background for gallery items */
+    background: #333; 
   }
   
   .gallery.dark .gallery-item:hover {
-    transform: scale(1.05); /* Hover effect remains the same */
+    transform: scale(1.05); 
   }
   
   .gallery.dark .gallery-image {
-    border-radius: 10px; /* Ensure image has rounded corners in dark mode */
+    border-radius: 10px; 
   }
   

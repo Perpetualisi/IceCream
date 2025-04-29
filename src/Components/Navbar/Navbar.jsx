@@ -7,7 +7,6 @@ const translations = {
   es: { home: "Inicio", flavours: "Sabores", testimonials: "Testimonios", about: "Acerca de", specialOffers: "Ofertas Especiales", gallery: "Galería", locations: "Ubicaciones", contact: "Contacto" }
 };
 
-// Sample data to search
 const flavourList = [
   "Vanilla Dream", "Chocolate Heaven", "Strawberry Bliss",
   "Minty Fresh", "Caramel Crunch", "Berry Explosion",
@@ -24,7 +23,6 @@ const Navbar = ({ language, handleLanguageChange, isDarkMode, handleDarkModeTogg
   const openSearch = () => setIsSearchOpen(true);
   const closeSearch = () => setIsSearchOpen(false);
 
-  // Filter the flavourList based on the searchQuery
   const filteredFlavours = flavourList.filter(flavour =>
     flavour.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -79,7 +77,6 @@ const Navbar = ({ language, handleLanguageChange, isDarkMode, handleDarkModeTogg
 
       </div>
 
-      {/* Search Section */}
       {isSearchOpen && (
         <div className="search-overlay">
           <input
@@ -93,7 +90,6 @@ const Navbar = ({ language, handleLanguageChange, isDarkMode, handleDarkModeTogg
           />
           <button className="cancel-search" onClick={closeSearch}>Cancel</button>
 
-          {/* Display search results */}
           {searchQuery && (
             <div className="search-results">
               {filteredFlavours.length > 0 ? (

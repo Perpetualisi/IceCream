@@ -1,8 +1,7 @@
 import React from "react";
-import './Hero.css'; // We will style it in this file
+import './Hero.css'; 
 
 const Hero = ({ language, isDarkMode }) => {
-  // Translations for different languages with more ice cream words
   const translations = {
     en: {
       heading: "Welcome to the Sweetest Spot in Town!",
