@@ -280,4 +280,27 @@
     color: #888;
     padding: 10px;
   }
-         
+         .logo h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 10px 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.curve-letter {
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: bold;
+  transform-origin: bottom center;
+}
+
+.curve-letter:nth-child(1) { transform: rotate(-25deg) translateY(10px); }
+.curve-letter:nth-child(2) { transform: rotate(-15deg) translateY(6px); }
+.curve-letter:nth-child(3) { transform: rotate(-8deg) translateY(4px); }
+.curve-letter:nth-child(4) { transform: rotate(0deg) translateY(2px); }
+.curve-letter:nth-child(5) { transform: rotate(8deg) translateY(4px); }
+.curve-letter:nth-child(6) { transform: rotate(15deg) translateY(6px); }
+.curve-letter:nth-child(7) { transform: rotate(25deg) translateY(10px); }
+.curve-letter:nth-child(8) { transform: rotate(30deg) translateY(14px); }

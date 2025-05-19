@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Components/Navbar/Navbar';
 import Hero from './Components/Hero/Hero';
 import Flavours from './Components/Flavours/Flavours';
@@ -13,9 +13,16 @@ import Footer from './Components/Footer/Footer';
 
 const App = () => {
   const [language, setLanguage] = useState('en');
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedMode = localStorage.getItem('darkMode');
+    return savedMode ? JSON.parse(savedMode) : true; 
+  });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    localStorage.setItem('darkMode', JSON.stringify(isDarkMode));
+  }, [isDarkMode]);
 
   const handleLanguageChange = (e) => {
     setLanguage(e.target.value);
@@ -58,7 +65,12 @@ const App = () => {
       <Gallery language={language} isDarkMode={isDarkMode} />
       <Locations language={language} isDarkMode={isDarkMode} />
       <Contact language={language} isDarkMode={isDarkMode} />
-      <Footer language={language} isDarkMode={isDarkMode} toggleDarkMode={handleDarkModeToggle} changeLanguage={handleLanguageChange} />
+      <Footer 
+        language={language} 
+        isDarkMode={isDarkMode} 
+        toggleDarkMode={handleDarkModeToggle} 
+        changeLanguage={handleLanguageChange} 
+      />
     </div>
   );
 };

@@ -54,8 +54,13 @@ const Navbar = ({ language, handleLanguageChange, isDarkMode, handleDarkModeTogg
           <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">📸</a>
         </div>
 
+        {/* Curved Logo */}
         <div className="logo">
-          <h1>Frostify</h1>
+          <h1>
+            {"Frostify".split("").map((char, index) => (
+              <span key={index} className="curve-letter">{char}</span>
+            ))}
+          </h1>
         </div>
 
         <div className="menu-icon" onClick={handleMenuToggle}>

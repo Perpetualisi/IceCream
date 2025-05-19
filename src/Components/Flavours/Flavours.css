@@ -1,4 +1,3 @@
-/* Flavours Section Styles */
 .flavours {
     padding: 60px 20px;
     text-align: center;
@@ -53,7 +52,6 @@
     line-height: 1.5;
   }
   
-  /* Mobile Responsiveness */
   @media screen and (max-width: 768px) {
     .flavours-heading {
       font-size: 2rem;
@@ -68,19 +66,18 @@
     }
   }
   
-  /* Dark Mode Styles */
   .flavours.dark {
     background-color: #333;
     color: #f1f1f1;
   }
   
   .flavours.dark .flavours-heading {
-    color: #FFD700; /* Yellow color for heading in dark mode */
+    color: #FFD700; 
   }
   
   .flavours.dark .flavour-name,
   .flavours.dark .flavour-description {
-    color: #FFD700; /* Yellow text in dark mode */
+    color: #FFD700; 
   }
   
   .flavours.dark .flavour-card {
@@ -88,12 +85,11 @@
   }
   
   .flavours.dark .flavour-card .flavour-info {
-    color: #FFD700; /* Yellow text for the flavour-info section inside the card */
+    color: #FFD700; 
   }
   
-  /* Dark Mode: Ensure text inside cards is yellow */
   .flavours.dark .flavour-card .flavour-name,
   .flavours.dark .flavour-card .flavour-description {
-    color: #FFD700 !important; /* Force yellow color for all text */
+    color: #FFD700 !important; 
   }
   

@@ -66,7 +66,7 @@ const Flavours = ({ language, isDarkMode }) => {
           return (
             <div key={flavour.id} className="flavour-card">
               <img 
-                src={translatedFlavour.image}  // Use the actual image path from translations
+                src={translatedFlavour.image}  
                 alt={translatedFlavour.name} 
                 className="flavour-image" 
               />
