@@ -1,9 +1,6 @@
 import React from "react";
-import './Flavours.css';
 
 const Flavours = ({ language, isDarkMode }) => {
-  console.log("Dark Mode:", isDarkMode);
-
   const translations = {
     en: {
       heading: "Our Delicious Flavours",
@@ -46,37 +43,42 @@ const Flavours = ({ language, isDarkMode }) => {
     }
   };
 
-  const flavours = [
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-  ];
+  const flavours = [1, 2, 3, 4, 5, 6, 7, 8];
 
   return (
-    <section id="flavours" className={`flavours ${isDarkMode ? 'dark' : ''}`}>
-      <h2 className="flavours-heading">{translations[language].heading}</h2>
-      <div className="flavours-grid">
-        {flavours.map(flavour => {
-          const translatedFlavour = translations[language].flavours[flavour.id];
-          return (
-            <div key={flavour.id} className="flavour-card">
-              <img 
-                src={translatedFlavour.image}  
-                alt={translatedFlavour.name} 
-                className="flavour-image" 
-              />
-              <div className="flavour-info">
-                <h3 className="flavour-name">{translatedFlavour.name}</h3>
-                <p className="flavour-description">{translatedFlavour.description}</p>
+    <section
+      id="flavours"
+      className={`${isDarkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"} py-16`}
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Heading */}
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          {translations[language].heading}
+        </h2>
+
+        {/* Flavours Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {flavours.map((id) => {
+            const flavour = translations[language].flavours[id];
+            return (
+              <div
+                key={id}
+                className={`rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300
+                  ${isDarkMode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-900"}`}
+              >
+                <img
+                  src={flavour.image}
+                  alt={flavour.name}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="text-xl font-semibold mb-2">{flavour.name}</h3>
+                  <p className="text-sm">{flavour.description}</p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </section>
   );

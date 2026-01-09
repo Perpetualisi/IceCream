@@ -1,20 +1,12 @@
 import React from "react";
-import './Gallery.css'; 
 
-const Gallery = ({ language, isDarkMode }) => {
+const Gallery = ({ language = "en", isDarkMode }) => {
   const translations = {
-    en: {
-      heading: "Our Flavours",
-    },
-    fr: {
-      heading: "Nos Saveurs",
-    },
-    es: {
-      heading: "Nuestros Sabores",
-    }
+    en: { heading: "Our Flavours" },
+    fr: { heading: "Nos Saveurs" },
+    es: { heading: "Nuestros Sabores" },
   };
 
-  
   const images = [
     { src: "/flavoursjsx/vanilla.jpg", alt: "Vanilla Ice Cream" },
     { src: "/images/hero.jpg", alt: "Chocolate Ice Cream" },
@@ -27,14 +19,32 @@ const Gallery = ({ language, isDarkMode }) => {
   ];
 
   return (
-    <section id="gallery" className={`gallery ${isDarkMode ? 'dark' : ''}`}>
-      <h2 className="gallery-heading">{translations[language].heading}</h2>
-      <div className="gallery-grid">
-        {images.map((image, index) => (
-          <div key={index} className="gallery-item">
-            <img src={image.src} alt={image.alt} className="gallery-image" />
-          </div>
-        ))}
+    <section
+      id="gallery"
+      className={`${isDarkMode ? "bg-gray-900 text-gray-200" : "bg-gray-50 text-gray-900"} py-16`}
+    >
+      <div className="max-w-7xl mx-auto px-6 text-center">
+        {/* Heading */}
+        <h2 className="text-3xl md:text-4xl font-bold mb-10">
+          {translations[language].heading}
+        </h2>
+
+        {/* Image Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {images.map((image, index) => (
+            <div
+              key={index}
+              className={`overflow-hidden rounded-xl shadow-lg transform transition duration-300 hover:scale-105
+                ${isDarkMode ? "bg-gray-800" : "bg-white"}`}
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-48 object-cover"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

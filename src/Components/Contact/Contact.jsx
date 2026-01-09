@@ -1,7 +1,6 @@
 import React from "react";
-import './Contact.css';
 
-const Contact = ({ language, isDarkMode }) => {
+const Contact = ({ language = "en", isDarkMode }) => {
   const translations = {
     en: {
       heading: "Get In Touch",
@@ -41,50 +40,88 @@ const Contact = ({ language, isDarkMode }) => {
         email: "Frostify@gmail.com",
         hours: "Horario: Lun - Sáb, 9AM - 6PM",
       },
-    }
+    },
   };
 
-  const content = translations[language];
+  const content = translations[language] || translations.en;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Thank you for contacting us! 🍦');
+    alert("Thank you for contacting us! 🍦");
   };
 
   return (
-    <section id="contact" className={`contact ${isDarkMode ? 'dark' : ''}`}>
-      <h2 className="contact-heading">{content.heading}</h2>
+    <section
+      id="contact"
+      className={`py-16 ${
+        isDarkMode ? "bg-gray-900 text-gray-200" : "bg-gray-50 text-gray-900"
+      }`}
+    >
+      <div className="max-w-5xl mx-auto px-6">
+        {/* Heading */}
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
+          {content.heading}
+        </h2>
 
-      <div className="contact-info">
-        <p><strong>📍 {content.contactInfo.address}</strong></p>
-        <p><strong>📞 {content.contactInfo.phone}</strong></p>
-        <p><strong>✉️ {content.contactInfo.email}</strong></p>
-        <p><strong>🕒 {content.contactInfo.hours}</strong></p>
+        {/* Contact Info */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 text-center md:text-left">
+          <p className="text-lg">
+            <strong>📍 {content.contactInfo.address}</strong>
+          </p>
+          <p className="text-lg">
+            <strong>📞 {content.contactInfo.phone}</strong>
+          </p>
+          <p className="text-lg">
+            <strong>✉️ {content.contactInfo.email}</strong>
+          </p>
+          <p className="text-lg">
+            <strong>🕒 {content.contactInfo.hours}</strong>
+          </p>
+        </div>
+
+        {/* Contact Form */}
+        <form
+          className="flex flex-col space-y-4 max-w-xl mx-auto"
+          onSubmit={handleSubmit}
+        >
+          <input
+            type="text"
+            placeholder={content.namePlaceholder}
+            required
+            className={`p-4 rounded-lg border focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors ${
+              isDarkMode
+                ? "bg-gray-800 border-gray-700 text-gray-200 placeholder-gray-400"
+                : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
+            }`}
+          />
+          <input
+            type="email"
+            placeholder={content.emailPlaceholder}
+            required
+            className={`p-4 rounded-lg border focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors ${
+              isDarkMode
+                ? "bg-gray-800 border-gray-700 text-gray-200 placeholder-gray-400"
+                : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
+            }`}
+          />
+          <textarea
+            placeholder={content.messagePlaceholder}
+            required
+            rows="5"
+            className={`p-4 rounded-lg border focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors ${
+              isDarkMode
+                ? "bg-gray-800 border-gray-700 text-gray-200 placeholder-gray-400"
+                : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
+            }`}
+          ></textarea>
+          <button
+            type="submit"
+            className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 rounded-lg transition-colors"
+          >
+            {content.button}
+          </button>
+        </form>
       </div>
-
-      <form className="contact-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder={content.namePlaceholder}
-          required
-          className="contact-input"
-        />
-        <input
-          type="email"
-          placeholder={content.emailPlaceholder}
-          required
-          className="contact-input"
-        />
-        <textarea
-          placeholder={content.messagePlaceholder}
-          required
-          className="contact-textarea"
-          rows="5"
-        ></textarea>
-        <button type="submit" className="contact-button">
-          {content.button}
-        </button>
-      </form>
     </section>
   );
 };

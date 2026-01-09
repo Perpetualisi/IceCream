@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './Testimonials.css';
 
 const Testimonials = ({ language, isDarkMode }) => {
   const translations = {
@@ -78,28 +77,55 @@ const Testimonials = ({ language, isDarkMode }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % translations[language].testimonials.length);
-    }, 5000);
+      setCurrentIndex(
+        (prevIndex) => (prevIndex + 1) % translations[language].testimonials.length
+      );
+    }, 5000); // rotate every 5 seconds
 
     return () => clearInterval(interval);
   }, [language]);
 
+  const testimonial = translations[language].testimonials[currentIndex];
+
   return (
-    <section id="testimonials" className={`testimonials ${isDarkMode ? 'dark' : ''}`}>
-      <h2 className="testimonials-heading">{translations[language].heading}</h2>
-      <div className="testimonials-slider">
-        <div className="testimonial-card">
+    <section
+      id="testimonials"
+      className={`${isDarkMode ? "bg-gray-900 text-gray-200" : "bg-gray-50 text-gray-900"} py-16`}
+    >
+      <div className="max-w-7xl mx-auto px-6 text-center">
+        {/* Heading */}
+        <h2 className="text-3xl md:text-4xl font-bold mb-12">
+          {translations[language].heading}
+        </h2>
+
+        {/* Testimonial Card */}
+        <div
+          className={`max-w-xl mx-auto p-6 rounded-xl shadow-lg transform transition-transform duration-500 hover:scale-105
+            ${isDarkMode ? "bg-gray-800 text-gray-200" : "bg-white text-gray-900"}
+          `}
+        >
           <img
-            src={translations[language].testimonials[currentIndex].imageUrl}
-            alt={translations[language].testimonials[currentIndex].name}
-            className="testimonial-image"
+            src={testimonial.imageUrl}
+            alt={testimonial.name}
+            className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
           />
-          <p className="testimonial-feedback">
-            "{translations[language].testimonials[currentIndex].feedback}"
-          </p>
-          <p className="testimonial-name">
-            - {translations[language].testimonials[currentIndex].name}
-          </p>
+          <p className="text-lg italic mb-4">"{testimonial.feedback}"</p>
+          <p className="font-semibold text-md">- {testimonial.name}</p>
+        </div>
+
+        {/* Navigation Dots */}
+        <div className="flex justify-center mt-8 space-x-2">
+          {translations[language].testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300
+                ${currentIndex === index
+                  ? "bg-pink-500"
+                  : isDarkMode ? "bg-gray-600" : "bg-gray-300"
+                }`}
+            />
+          ))}
         </div>
       </div>
     </section>

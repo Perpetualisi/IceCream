@@ -4,10 +4,37 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#EC4899',   /* bright pink */
+              secondary: '#F472B6', /* lighter pink */
+              cream: '#FFF7ED',     /* soft cream */
+              dark: '#0F172A'       /* dark background */
+            },
+            fontFamily: {
+              display: ['Poppins', 'sans-serif'],
+              body: ['Inter', 'sans-serif']
+            }
+          }
+        }
+      }
+    </script>
+
     <title>Frostify</title>
   </head>
-  <body>
+  <body class="font-body">
     <div id="root"></div>
+
+    <!-- React entry -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

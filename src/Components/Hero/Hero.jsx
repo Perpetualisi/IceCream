@@ -1,70 +1,38 @@
-import React, { useEffect, useState } from "react";
-import './Hero.css';
+import React, { useState, useEffect } from "react";
 
-const Hero = ({ language, isDarkMode }) => {
+const Hero = ({ language = "en", isDarkMode = false }) => {
+  // Full translations for EN, FR, ES
   const translations = {
     en: {
-      headings: [
-        "Welcome to the Sweetest Spot in Town!",
+      heading: "Welcome to the Sweetest Spot in Town!",
+      subheadings: [
         "Indulge in Creamy Happiness!",
         "Chill with Every Scoop!",
-        "Delicious Moments Await!",
-        "Every Bite is Bliss!",
-        "Scoop, Smile, Repeat!",
-        "Discover Your Favourite Flavour!",
-        "Flavours that Spark Joy!",
-        "Cool Down, Sweeten Up!",
-        "Where Ice Cream Dreams Come True!",
-        "Tastes You’ll Never Forget!",
-        "A Party in Every Cone!",
-        "More than Just Ice Cream!",
-        "Crafted with Love, Served with Joy!"
+        "Delicious Moments Await!"
       ],
-      subheading: "Scoop up the finest, creamiest ice cream flavours made with love and top-quality ingredients. Each scoop is a burst of joy, crafted to bring a smile to your face and sweetness to your day. Whether it’s a treat for yourself or a shared delight, our ice cream turns ordinary moments into extraordinary ones.",
       cta: "Scoop Yours Now"
     },
     fr: {
-      headings: [
-        "Bienvenue dans le lieu le plus sucré de la ville !",
+      heading: "Bienvenue dans le lieu le plus sucré de la ville !",
+      subheadings: [
         "Savourez un bonheur crémeux !",
         "Détendez-vous avec chaque cuillerée !",
-        "Des moments délicieux vous attendent !",
-        "Chaque bouchée est un bonheur !",
-        "Scoop, souriez, répétez !",
-        "Découvrez votre parfum préféré !",
-        "Des saveurs qui apportent de la joie !",
-        "Rafraîchissez-vous et sucrez votre journée !",
-        "Là où les rêves glacés deviennent réalité !",
-        "Des goûts inoubliables !",
-        "Une fête dans chaque cornet !",
-        "Bien plus que de la glace !",
-        "Préparée avec amour, servie avec joie !"
+        "Des moments délicieux vous attendent !"
       ],
-      subheading: "Dégustez les saveurs de glace les plus fines et crémeuses, préparées avec amour et des ingrédients de qualité. Chaque cuillerée est une explosion de joie, conçue pour illuminer votre journée. Que ce soit un plaisir personnel ou un moment partagé, notre glace rend chaque instant spécial.",
       cta: "Prenez le vôtre maintenant"
     },
     es: {
-      headings: [
-        "¡Bienvenido al lugar más dulce de la ciudad!",
+      heading: "¡Bienvenido al lugar más dulce de la ciudad!",
+      subheadings: [
         "¡Disfruta de la felicidad cremosa!",
         "¡Relájate con cada cucharada!",
-        "¡Momentos deliciosos te esperan!",
-        "¡Cada bocado es una delicia!",
-        "¡Sirve, sonríe, repite!",
-        "¡Descubre tu sabor favorito!",
-        "¡Sabores que despiertan alegría!",
-        "¡Refresca tu día con dulzura!",
-        "¡Donde los sueños helados se hacen realidad!",
-        "¡Sabores que no olvidarás!",
-        "¡Una fiesta en cada cono!",
-        "¡Más que solo helado!",
-        "¡Hecho con amor, servido con alegría!"
+        "¡Momentos deliciosos te esperan!"
       ],
-      subheading: "Disfruta de los sabores de helado más finos y cremosos, elaborados con amor y los mejores ingredientes. Cada cucharada es un estallido de alegría que transforma lo cotidiano en algo extraordinario. Comparte una sonrisa, celebra un momento, y déjate llevar por la dulzura.",
       cta: "Sírvelo ahora"
     }
   };
 
+  // Hero images
   const heroImages = [
     "/images/hero1.jpg",
     "/images/hero2.jpg",
@@ -74,28 +42,58 @@ const Hero = ({ language, isDarkMode }) => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const currentHeadings = translations[language].headings;
 
+  // Use fallback to English if language not found
+  const { heading, subheadings, cta } = translations[language] || translations["en"];
+
+  // Rotate images and subheadings every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-    }, 3000); // Change image and text every 3 seconds
+      setCurrentIndex(prev => (prev + 1) % heroImages.length);
+    }, 3000);
 
     return () => clearInterval(interval);
-  }, [heroImages.length]);
+  }, []);
 
   return (
-    <section id="home" className={`hero ${isDarkMode ? 'dark' : ''}`}>
-      <div className="hero-container">
-        <div className="hero-image">
-          <img src={heroImages[currentIndex]} alt="Ice Cream Delight" />
+    <section
+      id="home"
+      className={`relative overflow-hidden ${
+        isDarkMode ? "bg-gray-900 text-white" : "bg-cream text-gray-900"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+        {/* Image with glow effect */}
+        <div className="relative w-full h-[320px] md:h-[420px] rounded-3xl overflow-hidden shadow-2xl">
+          <div className="absolute -inset-4 bg-gradient-to-tr from-pink-400 via-purple-400 to-blue-400 rounded-3xl blur-3xl opacity-30" />
+          <img
+            key={currentIndex} // triggers smooth transition
+            src={heroImages[currentIndex]}
+            alt="Ice Cream Delight"
+            className="relative w-full h-full object-cover transition-opacity duration-1000 opacity-100"
+          />
         </div>
-        <div className="hero-content">
-          <h1 className="hero-heading fade-in-text">
-            {currentHeadings[currentIndex % currentHeadings.length]}
+
+        {/* Content */}
+        <div className="space-y-6">
+          {/* Static main heading */}
+          <h1 className="text-3xl md:text-5xl font-display font-extrabold leading-tight">
+            {heading}
           </h1>
-          <p className="hero-subheading">{translations[language].subheading}</p>
-          <a href="#flavours" className="cta-button">{translations[language].cta}</a>
+
+          {/* Rotating subheading */}
+          <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-xl transition-opacity duration-700">
+            {subheadings[currentIndex % subheadings.length]}
+          </p>
+
+          {/* CTA Button */}
+          <a
+            href="#flavours"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-pink-600 text-white font-semibold shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
+          >
+            🍦 {cta}
+          </a>
         </div>
       </div>
     </section>
