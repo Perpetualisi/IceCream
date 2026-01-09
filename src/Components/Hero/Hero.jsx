@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 const Hero = ({ language = "en", isDarkMode = false }) => {
-  // Full translations for EN, FR, ES
   const translations = {
     en: {
       heading: "Welcome to the Sweetest Spot in Town!",
@@ -32,7 +31,6 @@ const Hero = ({ language = "en", isDarkMode = false }) => {
     }
   };
 
-  // Hero images
   const heroImages = [
     "/images/hero1.jpg",
     "/images/hero2.jpg",
@@ -42,18 +40,26 @@ const Hero = ({ language = "en", isDarkMode = false }) => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [prevIndex, setPrevIndex] = useState(null);
 
-  // Use fallback to English if language not found
   const { heading, subheadings, cta } = translations[language] || translations["en"];
 
-  // Rotate images and subheadings every 3 seconds
+  // Preload all images
+  useEffect(() => {
+    heroImages.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
+  // Rotate images every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex(prev => (prev + 1) % heroImages.length);
+      setPrevIndex(currentIndex);
+      setCurrentIndex((prev) => (prev + 1) % heroImages.length);
     }, 3000);
-
     return () => clearInterval(interval);
-  }, []);
+  }, [currentIndex]);
 
   return (
     <section
@@ -63,31 +69,36 @@ const Hero = ({ language = "en", isDarkMode = false }) => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-
-        {/* Image with glow effect */}
+        {/* Image Container */}
         <div className="relative w-full h-[320px] md:h-[420px] rounded-3xl overflow-hidden shadow-2xl">
           <div className="absolute -inset-4 bg-gradient-to-tr from-pink-400 via-purple-400 to-blue-400 rounded-3xl blur-3xl opacity-30" />
+          
+          {/* Previous Image */}
+          {prevIndex !== null && (
+            <img
+              src={heroImages[prevIndex]}
+              alt="Ice Cream Delight"
+              className="absolute w-full h-full object-cover transition-opacity duration-1000 opacity-0"
+            />
+          )}
+
+          {/* Current Image */}
           <img
-            key={currentIndex} // triggers smooth transition
             src={heroImages[currentIndex]}
             alt="Ice Cream Delight"
-            className="relative w-full h-full object-cover transition-opacity duration-1000 opacity-100"
+            className="absolute w-full h-full object-cover transition-opacity duration-1000 opacity-100"
+            loading={currentIndex === 0 ? "eager" : "lazy"}
           />
         </div>
 
         {/* Content */}
         <div className="space-y-6">
-          {/* Static main heading */}
           <h1 className="text-3xl md:text-5xl font-display font-extrabold leading-tight">
             {heading}
           </h1>
-
-          {/* Rotating subheading */}
           <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-xl transition-opacity duration-700">
             {subheadings[currentIndex % subheadings.length]}
           </p>
-
-          {/* CTA Button */}
           <a
             href="#flavours"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-pink-600 text-white font-semibold shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
