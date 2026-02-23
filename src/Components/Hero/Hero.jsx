@@ -17,18 +17,33 @@ const PremiumHero = ({ isDarkMode = false }) => {
 
   const popSnd = "data:audio/wav;base64,UklGRl9vT19XQVZFRm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YTdvT197e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3s=";
 
-  const playScoopSound = () => {
+  const handleScoopClick = () => {
+    // 1. Play the "Scoop" sound
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
       audioRef.current.volume = 0.2;
       audioRef.current.play().catch(() => {});
+    }
+
+    // 2. Scroll to the Flavours section
+    const flavoursSection = document.getElementById('flavours');
+    if (flavoursSection) {
+      const offset = 80; // Account for the sticky navbar
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = flavoursSection.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
     }
   };
 
   useEffect(() => {
     const id = setInterval(() => {
       setIsChanging(true);
-      // We don't play sound automatically anymore to follow browser autoplay policies
       setTimeout(() => {
         setIndex((prev) => (prev + 1) % flavours.length);
         setIsChanging(false);
@@ -82,10 +97,10 @@ const PremiumHero = ({ isDarkMode = false }) => {
 
             <div className="flex flex-col items-center lg:items-start gap-6 lg:gap-8">
               <button 
-                onClick={() => playScoopSound()}
-                className={`${f.bg} w-full sm:w-auto text-white px-8 py-4 lg:px-10 lg:py-5 rounded-2xl font-black uppercase tracking-widest text-xs lg:text-sm flex items-center justify-center gap-3 transform hover:scale-105 active:scale-95 transition-all shadow-2xl`}
+                onClick={handleScoopClick}
+                className={`${f.bg} w-full sm:w-auto text-white px-8 py-4 lg:px-10 lg:py-5 rounded-2xl font-black uppercase tracking-widest text-xs lg:text-sm flex items-center justify-center gap-3 transform hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-black/10`}
               >
-                <span>😋 Scoop Now</span>
+                <span>😋 Scoop Yours</span>
               </button>
               
               {/* Fan Proof */}
