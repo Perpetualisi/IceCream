@@ -32,8 +32,7 @@ const linkKeys = [
 const ArcLogo = ({ dark }) => (
   <svg
     viewBox="0 0 220 58"
-    width="148"
-    height="44"
+    className="frostify-logo-svg"
     aria-label="Frostify"
     style={{ overflow: "visible", flexShrink: 0 }}
   >
@@ -76,7 +75,6 @@ const Navbar = ({
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState("home");
-  const drawerRef = useRef(null);
   const t = translations[language] || translations.en;
 
   useEffect(() => {
@@ -85,24 +83,21 @@ const Navbar = ({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Updated Smooth Scroll Logic
   const scrollToSection = (e, id) => {
     if (e) e.preventDefault();
     setActiveLink(id);
     handleCloseMenu?.();
 
-    // Fix for Home: Scrolls to the absolute top of the page
     if (id === 'home') {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
-    // Fix for Special Offers: Look for ID "specialOffers" OR "special-offers"
     const hyphenatedId = id.replace(/[A-Z]/g, m => "-" + m.toLowerCase());
     const element = document.getElementById(id) || document.getElementById(hyphenatedId);
     
     if (element) {
-      const offset = 80; // Offset for fixed navbar
+      const offset = 80;
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = elementPosition - offset;
 
@@ -131,15 +126,40 @@ const Navbar = ({
           height:62px;
         }
 
-        .nb::before {
-          content:''; position:absolute; top:0;left:0;right:0; height:3px;
-          background:repeating-linear-gradient(90deg, #FF6B8A 0,#FF6B8A 30px, #FFD4B8 30px,#FFD4B8 60px, #7B6CF6 60px,#7B6CF6 90px, #6DBE8D 90px,#6DBE8D 120px, #F9CF4A 120px,#F9CF4A 150px);
-          opacity:0; transition:opacity .35s;
+        .nb-inner { 
+          max-width:1280px; 
+          margin:0 auto; 
+          padding:0 24px; 
+          width:100%; 
+          display:flex; 
+          align-items:center; 
+          justify-content:space-between; 
         }
-        .nb.scrolled::before { opacity:1; }
 
-        .nb-inner { max-width:1280px; margin:0 auto; padding:0 24px; width:100%; display:flex; align-items:center; justify-content:space-between; }
-        
+        /* Mobile Adjustments for Logo Space */
+        @media (max-width: 768px) {
+          .nb-inner {
+            padding: 0 12px; /* Reduce side padding to give more internal room */
+          }
+          .nb-logo-link {
+            transform: translateX(-8px); /* Nudge logo further left */
+          }
+          .frostify-logo-svg {
+            width: 120px; /* Scale logo down slightly so it doesn't hit the center */
+            height: 38px;
+          }
+          .nb-controls {
+            gap: 8px; /* Tighten gap between buttons */
+          }
+        }
+
+        @media (min-width: 769px) {
+          .frostify-logo-svg {
+            width: 148px;
+            height: 44px;
+          }
+        }
+
         .nb-controls { display:flex; align-items:center; gap:12px; }
 
         .nb-mode-btn {
@@ -156,19 +176,19 @@ const Navbar = ({
 
         .nb-lang {
           appearance:none; border:1.5px solid rgba(180,120,80,.28); border-radius:100px;
-          padding:5px 24px 5px 12px; font-size:.78rem; font-weight:600; cursor:pointer;
+          padding:5px 20px 5px 10px; font-size:.7rem; font-weight:600; cursor:pointer;
           background: ${isDarkMode ? "rgba(255,255,255,.07)" : "rgba(255,255,255,.55)"};
           color: ${isDarkMode ? "#FFF8F0" : "#1A1008"};
           background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23D4896A'/%3E%3C/svg%3E");
-          background-repeat:no-repeat; background-position:right 9px center;
+          background-repeat:no-repeat; background-position:right 7px center;
         }
 
         .nb-ham {
-          display:flex; flex-direction:column; gap:5px; width:40px; height:40px;
+          display:flex; flex-direction:column; gap:5px; width:38px; height:38px;
           align-items:center; justify-content:center; background:rgba(255,107,138,.08);
-          border:1.5px solid rgba(255,107,138,.18); border-radius:12px; cursor:pointer;
+          border:1.5px solid rgba(255,107,138,.18); border-radius:10px; cursor:pointer;
         }
-        .nb-bar { width:20px; height:2.5px; border-radius:2px; background: ${isDarkMode ? "#FFF8F0" : "#1A1008"}; transition: all .3s; }
+        .nb-bar { width:18px; height:2px; border-radius:2px; background: ${isDarkMode ? "#FFF8F0" : "#1A1008"}; transition: all .3s; }
         
         .nb-drawer {
           position:fixed; top:0; right:0; width:min(340px,90vw); height:100dvh;
@@ -203,7 +223,7 @@ const Navbar = ({
           </a>
 
           <div className="nb-controls">
-            <button className="nb-mode-btn" onClick={handleDarkModeToggle}>
+            <button className="nb-mode-btn" onClick={handleDarkModeToggle} aria-label="Toggle Dark Mode">
               <div className="nb-mode-thumb">{isDarkMode ? "🌙" : "☀️"}</div>
             </button>
 
@@ -213,7 +233,7 @@ const Navbar = ({
               <option value="es">ES</option>
             </select>
 
-            <button id="nb-ham-btn" className={`nb-ham${isMenuOpen ? " open" : ""}`} onClick={handleMenuToggle}>
+            <button id="nb-ham-btn" className={`nb-ham${isMenuOpen ? " open" : ""}`} onClick={handleMenuToggle} aria-label="Open Menu">
               <span className="nb-bar" />
               <span className="nb-bar" />
               <span className="nb-bar" />
@@ -225,7 +245,7 @@ const Navbar = ({
       <aside id="nb-drawer" className={`nb-drawer ${isMenuOpen ? "open" : ""}`}>
         <div className="nb-drawer-top" style={{display:'flex', justifyContent:'space-between', padding:'20px', alignItems:'center', borderBottom:'1px solid rgba(0,0,0,0.1)'}}>
           <span className="nb-drawer-title" style={{fontWeight:'900', fontStyle:'italic', opacity:0.5}}>MENU</span>
-          <button className="nb-close-btn" onClick={handleCloseMenu} style={{background:'none', border:'none', fontSize:'20px', cursor:'pointer', color: isDarkMode ? '#fff' : '#000'}}>✕</button>
+          <button className="nb-close-btn" onClick={handleCloseMenu} style={{background:'none', border:'none', fontSize:'24px', cursor:'pointer', color: isDarkMode ? '#fff' : '#000'}}>✕</button>
         </div>
 
         <ul className="nb-drawer-links" style={{listStyle:'none', padding:'20px 0'}}>
@@ -244,7 +264,7 @@ const Navbar = ({
         </ul>
 
         <div className="nb-drawer-bottom" style={{marginTop:'auto', padding:'30px 20px', borderTop:'1px solid rgba(0,0,0,0.1)'}}>
-          <p style={{fontSize:'0.8rem', opacity:0.6, letterSpacing:'1px'}}>FROSTIFY ARTISAN ICE CREAM<br/>EST. 2024</p>
+          <p style={{fontSize:'0.8rem', opacity:0.6, fontStyle:'italic', fontWeight:'bold', letterSpacing:'1px'}}>FROSTIFY ARTISAN ICE CREAM<br/>EST. 2024</p>
         </div>
       </aside>
     </>
