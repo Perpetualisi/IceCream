@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
 /* ─────────────────────────────────────────────
-   DATA
+    DATA
 ───────────────────────────────────────────── */
 const FLAVOURS = [
   {
@@ -69,7 +69,7 @@ const translations = {
 };
 
 /* ─────────────────────────────────────────────
-   3-D ICE CREAM RENDER (pure SVG + CSS)
+    3-D ICE CREAM RENDER (pure SVG + CSS)
 ───────────────────────────────────────────── */
 const IceCream3D = ({ f, size = 180, hover }) => {
   const s = size / 180; // scale factor
@@ -97,7 +97,6 @@ const IceCream3D = ({ f, size = 180, hover }) => {
       style={{
         overflow: "visible",
         filter: `drop-shadow(0 ${16*s}px ${32*s}px rgba(0,0,0,0.45)) drop-shadow(0 ${4*s}px ${8*s}px ${f.c3}66)`,
-        transition: "filter 0.4s",
         transform: hover ? `translateY(${-8*s}px)` : "translateY(0)",
         transition: "transform 0.5s cubic-bezier(0.34,1.56,0.64,1), filter 0.4s",
       }}
@@ -147,53 +146,40 @@ const IceCream3D = ({ f, size = 180, hover }) => {
       </defs>
 
       {/* ── CONE ── */}
-      {/* Waffle fill */}
       <path
         d={`M${cx - 58*s} ${coneTopY} L${cx} ${tipY} L${cx + 58*s} ${coneTopY} Z`}
         fill={`url(#wf${f.id})`}
       />
-      {/* Cone outline + shading */}
       <path
         d={`M${cx - 58*s} ${coneTopY} L${cx} ${tipY} L${cx + 58*s} ${coneTopY} Z`}
         fill="none" stroke="#5A2800" strokeWidth={1.5*s} strokeLinejoin="round"
       />
-      {/* Right dark shading */}
       <path
         d={`M${cx + 10*s} ${coneTopY} L${cx} ${tipY} L${cx + 58*s} ${coneTopY} Z`}
         fill="rgba(0,0,0,0.18)"
       />
-      {/* Rim highlight */}
       <path
         d={`M${cx - 58*s} ${coneTopY} Q${cx} ${coneTopY - 8*s} ${cx + 58*s} ${coneTopY}`}
         fill="none" stroke="rgba(255,220,140,0.7)" strokeWidth={2*s} strokeLinecap="round"
       />
-      {/* Cone tip gleam */}
       <ellipse cx={cx} cy={tipY - 4*s} rx={4*s} ry={2.5*s} fill="rgba(255,200,100,0.35)" />
 
-      {/* ── SCOOPS (bottom to top) ── */}
-
-      {/* Scoop 0 — largest */}
-      {/* Shadow underneath */}
+      {/* ── SCOOPS ── */}
       <ellipse cx={cx} cy={y0 + r0 * 0.7} rx={r0 * 0.85} ry={r0 * 0.22} fill={`url(#sd${f.id})`} />
-      {/* Body */}
       <circle cx={cx} cy={y0} r={r0} fill={`url(#sg${f.id}-0)`} />
-      {/* Depth shadow on lower-right */}
-      <circle cx={cx} cy={y0} r={r0} fill="url(#sd0)" opacity="0.4">
+      {/* FIXED ERROR HERE: changed url(#sd0) to use the correct dynamic ID */}
+      <circle cx={cx} cy={y0} r={r0} fill={`url(#sd${f.id})`} opacity="0.4">
         <animate attributeName="opacity" values="0.3;0.5;0.3" dur="4s" repeatCount="indefinite" />
       </circle>
-      {/* Gloss */}
       <circle cx={cx} cy={y0} r={r0} fill={`url(#gl${f.id})`} />
-      {/* Specular dot */}
       <ellipse cx={cx - r0*0.3} cy={y0 - r0*0.35} rx={r0*0.18} ry={r0*0.13} fill="rgba(255,255,255,0.7)" style={{filter:`blur(${2*s}px)`}} />
 
-      {/* Scoop 1 — medium */}
       {f.scoops >= 2 && <>
         <circle cx={cx} cy={y1} r={r1} fill={`url(#sg${f.id}-1)`} />
         <circle cx={cx} cy={y1} r={r1} fill={`url(#gl${f.id})`} />
         <ellipse cx={cx - r1*0.28} cy={y1 - r1*0.32} rx={r1*0.18} ry={r1*0.12} fill="rgba(255,255,255,0.65)" style={{filter:`blur(${1.5*s}px)`}} />
       </>}
 
-      {/* Scoop 2 — small top */}
       {f.scoops >= 3 && <>
         <circle cx={cx} cy={y2} r={r2} fill={`url(#sg${f.id}-2)`} />
         <circle cx={cx} cy={y2} r={r2} fill={`url(#gl${f.id})`} />
@@ -238,7 +224,6 @@ const IceCream3D = ({ f, size = 180, hover }) => {
         </g>
       ))}
 
-      {/* ── GROUND SHADOW ── */}
       <ellipse
         cx={cx} cy={H * 0.99}
         rx={hover ? 48*s : 40*s} ry={6*s}
@@ -251,7 +236,7 @@ const IceCream3D = ({ f, size = 180, hover }) => {
 };
 
 /* ─────────────────────────────────────────────
-   PREMIUM CARD
+    PREMIUM CARD
 ───────────────────────────────────────────── */
 const PremiumCard = ({ f, index, isMobile, isTablet }) => {
   const wrapRef = useRef(null);
@@ -313,14 +298,12 @@ const PremiumCard = ({ f, index, isMobile, isTablet }) => {
           backdropFilter: "blur(20px)",
         }}
       >
-        {/* ── Noise texture overlay ── */}
         <div style={{
           position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
           opacity: 0.04, mixBlendMode: "overlay",
         }} />
 
-        {/* ── Gradient body ── */}
         <div style={{
           position: "absolute", inset: 0,
           background: `linear-gradient(145deg,
@@ -331,7 +314,6 @@ const PremiumCard = ({ f, index, isMobile, isTablet }) => {
           transition: "background 0.5s",
         }} />
 
-        {/* ── Holographic shimmer ── */}
         <div style={{
           position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
           background: `radial-gradient(circle at ${shine.x}% ${shine.y}%, rgba(255,255,255,0.16) 0%, transparent 58%)`,
@@ -340,7 +322,6 @@ const PremiumCard = ({ f, index, isMobile, isTablet }) => {
           mixBlendMode: "overlay",
         }} />
 
-        {/* ── Coloured rim ── */}
         <div style={{
           position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
           borderRadius: 28,
@@ -348,7 +329,6 @@ const PremiumCard = ({ f, index, isMobile, isTablet }) => {
           transition: "box-shadow 0.35s",
         }} />
 
-        {/* ── Top coloured stripe ── */}
         <div style={{
           position: "absolute", top: 0, left: 0, right: 0,
           height: 3, borderRadius: "28px 28px 0 0",
@@ -357,7 +337,6 @@ const PremiumCard = ({ f, index, isMobile, isTablet }) => {
           transition: "opacity 0.3s",
         }} />
 
-        {/* ── Badge ── */}
         <div style={{
           position: "absolute", top: 18, left: 18, zIndex: 5,
           background: `${f.c4}cc`,
@@ -371,7 +350,6 @@ const PremiumCard = ({ f, index, isMobile, isTablet }) => {
           transition: "transform 0.35s",
         }}>{f.badge}</div>
 
-        {/* ── 3D Ice Cream ── */}
         <div style={{
           display: "flex", justifyContent: "center",
           paddingTop: isMobile ? 18 : isTablet ? 24 : 40,
@@ -383,14 +361,12 @@ const PremiumCard = ({ f, index, isMobile, isTablet }) => {
           <IceCream3D f={f} size={scoopSize} hover={hovered} />
         </div>
 
-        {/* ── Bottom info ── */}
         <div style={{
           padding: isMobile ? "10px 12px 14px" : isTablet ? "14px 16px 18px" : "18px 22px 26px",
           position: "relative", zIndex: 4,
           transform: `translateZ(${hovered ? 16 : 0}px)`,
           transition: "transform 0.35s",
         }}>
-          {/* Description */}
           <div style={{
             maxHeight: hovered ? 32 : 0, overflow: "hidden",
             opacity: hovered ? 1 : 0,
@@ -414,7 +390,6 @@ const PremiumCard = ({ f, index, isMobile, isTablet }) => {
             lineHeight: 1,
           }}>{f.name}</h3>
 
-          {/* Accent bar */}
           <div style={{
             marginTop: 10, height: 2, borderRadius: 2,
             background: `linear-gradient(90deg, ${f.c1}, ${f.c2}, ${f.c3}44)`,
@@ -429,16 +404,18 @@ const PremiumCard = ({ f, index, isMobile, isTablet }) => {
 };
 
 /* ─────────────────────────────────────────────
-   SECTION
+    SECTION
 ───────────────────────────────────────────── */
 const Flavours = ({ language = "en", isDarkMode = false }) => {
   const t   = translations[language] || translations.en;
   const [isMobile, setMobile] = useState(false);
   const [isTablet, setTablet] = useState(false);
-  const isSmall = isMobile || isTablet;
 
   useEffect(() => {
-    const check = () => { setMobile(window.innerWidth < 480); setTablet(window.innerWidth >= 480 && window.innerWidth < 768); };
+    const check = () => { 
+      setMobile(window.innerWidth < 480); 
+      setTablet(window.innerWidth >= 480 && window.innerWidth < 768); 
+    };
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
@@ -497,7 +474,6 @@ const Flavours = ({ language = "en", isDarkMode = false }) => {
           }} />
         ))}
 
-        {/* fine grid */}
         <div style={{
           position:"absolute", inset:0,
           backgroundImage:"linear-gradient(rgba(255,255,255,0.024) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.024) 1px,transparent 1px)",
